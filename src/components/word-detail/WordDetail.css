@@ -1,0 +1,12 @@
+.grammar-name,
+.grammar-example {
+  border: 0;
+  padding: .25rem 0;
+}
+
+.grammar-name {
+  color: #8a8a8a;
+  padding-right: 1rem;
+  white-space: nowrap;
+  width: 1px;
+}

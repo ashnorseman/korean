@@ -3,23 +3,39 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
+    "@reduxjs/toolkit": "^1.4.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "@types/bent": "^7.3.1",
     "@types/jest": "^24.9.1",
     "@types/node": "^12.12.67",
     "@types/react": "^16.9.52",
     "@types/react-dom": "^16.9.8",
+    "@types/react-redux": "^7.1.9",
+    "@types/react-router-dom": "^5.1.6",
+    "aromanize": "^0.1.5",
+    "bent": "^7.3.12",
+    "fontsource-roboto": "^3.0.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-redux": "^7.2.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
+    "ts-node-dev": "^1.0.0-pre.65",
     "typescript": "^3.7.5"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "deploy": "scp -r build/* ash@121.40.197.93:/home/ash/kr",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "parse:hanja": "ts-node-dev --respawn --project src/scripts/tsconfig.json src/scripts/parse-hanja.ts",
+    "parse:words": "ts-node-dev --respawn --project src/scripts/tsconfig.json src/scripts/parse-raw-words.ts",
+    "sort:words": "ts-node-dev --respawn --project src/scripts/tsconfig.json src/scripts/sort-words.ts"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -1,0 +1,31 @@
+.word-list {
+  position: relative;
+}
+
+.options-holder {
+  background: white;
+  border-bottom: 1px solid #ebebeb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .5rem 1rem;
+  position: sticky;
+  top: 56px;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+}
+
+.grammar-toggle {
+  margin-left: .5rem;
+}
+
+.play-all {
+  display: flex;
+  align-items: center;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}

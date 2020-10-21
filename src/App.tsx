@@ -1,25 +1,26 @@
+import CssBaseline from '@material-ui/core/CssBaseline';
 import React from 'react';
-import logo from './logo.svg';
+import { Route, Redirect, Switch, HashRouter } from 'react-router-dom';
+
 import './App.css';
+
+import { LessonPage } from './pages/lesson';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Fragment>
+      <CssBaseline />
+
+      <HashRouter>
+        <Switch>
+          <Route path="/book/:book/lesson/:lesson" children={<LessonPage />} />
+
+          <Route path="*">
+            <Redirect to="/book/1/lesson/1" />
+          </Route>
+        </Switch>
+      </HashRouter>
+    </React.Fragment>
   );
 }
 
