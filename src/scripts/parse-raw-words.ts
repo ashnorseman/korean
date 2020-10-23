@@ -72,7 +72,7 @@ async function parseWords() {
 
         const meaning = firstMeaning.value
             .replace(/<[^>]+>/g, '')
-            .replace(/\([^()]+\)/g, '')
+            .replace(/\([^)]+\)/g, '')
             .replace(/\s*([，。])\s*/g, '$1')
             .replace(/\s*,\s*/g, '，')
             .replace(/。$/, '');
@@ -84,7 +84,7 @@ async function parseWords() {
         naverResults.push({
           description: item.expAliasGeneralAlwaysList?.pop()?.originLanguageValue || '',
           example: (firstMeaning.exampleTrans || '').replace(/<[^>]+>/g, ''),
-          exampleTrans: firstMeaning.exampleOri || '',
+          exampleTrans: (firstMeaning.exampleOri || '').replace(/<[^>]+>/g, '') || '',
           hasAudio: !!filePath,
           meaning,
           pos,

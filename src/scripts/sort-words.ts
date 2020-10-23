@@ -9,8 +9,8 @@ const wordLines: string[] = fs.readFileSync(wordsPath, 'utf-8')
   .split('\n')
   .sort((a, b) => {
     return a.startsWith('*')
-      ? b.startsWith('*') ? 0 : -1
-      : b.startsWith('*') ? 1 : 0;
+      ? b.startsWith('*') ? a.localeCompare(b) : -1
+      : b.startsWith('*') ? 1 : a.localeCompare(b);
   });
 
 fs.writeFileSync(wordsPath, wordLines.join('\n') + '\n');
@@ -42,12 +42,27 @@ const words: IWord[] = wordLines
       return a.ysUnit - b.ysUnit;
     }
 
-    const posSequence: string[] = ['名词', '动词', '形容词', '副词', '代名词', '依赖名词', '冠词', '助词', '感叹词'];
+    const posSequence: string[] = ['名词', '动词', '形容词', '副词', '代名词', '依赖名词', '数词', '冠词', '助词', '感叹词'];
     const aPos = posSequence.indexOf(a.pos);
     const bPos = posSequence.indexOf(b.pos);
 
     if (aPos !== bPos) {
       return aPos - bPos;
+    }
+
+    const aTags = a.tags.toLocaleString();
+    const bTags = b.tags.toLocaleString();
+
+    if (aTags !== bTags) {
+      if (!aTags) {
+        return 1;
+      }
+
+      if (!bTags) {
+        return -1;
+      }
+
+      return aTags.localeCompare(bTags);
     }
 
     return a.wordName.localeCompare(b.wordName);

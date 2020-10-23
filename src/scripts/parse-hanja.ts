@@ -81,7 +81,17 @@ const hanjaLines: any[] = fs.readFileSync(hanja, 'utf-8')
     };
   });
 
-console.log(shengmuSet);
+const koreanSet: Map<string, string[]> = new Map();
+
+hanjaLines.forEach(hanja => {
+  if (!koreanSet.get(hanja.korean)) {
+    koreanSet.set(hanja.korean, []);
+  }
+
+  koreanSet.get(hanja.korean)?.push(hanja.hanja);
+});
+
+console.log(koreanSet);
 
 // fs.writeFileSync(wordsPath, wordLines.join('\n') + '\n');
 //
