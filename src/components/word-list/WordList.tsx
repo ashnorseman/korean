@@ -8,7 +8,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import React from 'react';
 
-import { IWord } from '../../interfaces/i-word';
+import { RawWordItem } from '../../models';
 
 import { AudioPlayer } from '../audio-player';
 import { WordDetail } from '../word-detail';
@@ -18,7 +18,7 @@ import './WordList.css';
 
 const Aromanize: any = require('aromanize');
 
-export function WordList(props: { words: IWord[] }) {
+export function WordList(props: { words: RawWordItem[] }) {
   const [state, setState] = React.useState({
     showType: 'all',
     showDetails: false
@@ -81,9 +81,9 @@ export function WordList(props: { words: IWord[] }) {
               return (
                 <React.Fragment key={word.wordName}>
                   <WordPreview showType={state.showType}
-                               {...word} />
+                               word={word} />
                   {
-                    state.showDetails ? <WordDetail {...word} /> : null
+                    state.showDetails ? <WordDetail word={word} /> : null
                   }
                 </React.Fragment>
               );

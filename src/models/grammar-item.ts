@@ -2,7 +2,7 @@
  * Grammar items
  */
 
-import { IWord } from '../interfaces/i-word';
+import { RawWordItem } from './raw-word-item';
 import { HangulAnalyser } from '../tools/hangul-analyser';
 import { grammarItems } from '../data/grammars';
 
@@ -16,8 +16,8 @@ export class GrammarItem {
   public name: string = '';
 
   // the grammar forms
-  public formAfterConsonant: string = ''
-  public formAfterVowel: string = ''
+  public formAfterConsonant: string = '';
+  public formAfterVowel: string = '';
 
   // the grammar is used after:
   public usedAfterAdjective: boolean = false;
@@ -57,7 +57,7 @@ export class GrammarItem {
   /**
    * Add grammar item after the word
    */
-  public provideExampleWith(word: IWord): string {
+  public provideExampleWith(word: RawWordItem): string {
     switch (word.pos) {
     case '名词':
     case '代名词':
@@ -74,8 +74,8 @@ export class GrammarItem {
   /**
    * The grammar can be used with the word
    */
-  public suitableFor(word: IWord): boolean {
-    if (this.usedForWordTags && (!word.tags || !word.tags.includes(this.usedForWordTags))) {
+  public suitableFor(word: RawWordItem): boolean {
+    if (this.usedForWordTags && (!word.tags || word.tags !== this.usedForWordTags)) {
       return false;
     }
 
@@ -92,7 +92,7 @@ export class GrammarItem {
     return false;
   }
 
-  private addPrefix(word: IWord): string {
+  private addPrefix(word: RawWordItem): string {
     if (!this.prefix) {
       return '';
     }
@@ -102,7 +102,7 @@ export class GrammarItem {
     return grammar?.provideExampleWith(word) || '';
   }
 
-  private provideExampleWithNoun(word: IWord): string {
+  private provideExampleWithNoun(word: RawWordItem): string {
     const prefixAdded = this.addPrefix(word);
 
     if (prefixAdded) {
@@ -131,7 +131,7 @@ export class GrammarItem {
     return this.exampleSuffix ? `${result} ${this.exampleSuffix}` : result;
   }
 
-  private provideExampleWithAV(word: IWord): string {
+  private provideExampleWithAV(word: RawWordItem): string {
     let wordBase = word.wordName.slice(0, -1);
     const wordBaseLastChar = wordBase[wordBase.length - 1];
     const wordTail = hangulAnalyser.parseTail(wordBaseLastChar);

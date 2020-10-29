@@ -4,21 +4,21 @@
 
 import React from 'react';
 
-import { IWord } from '../../interfaces/i-word';
 import './WordPreview.css'
 import { AudioPlayer } from '../audio-player';
+import { RawWordItem } from '../../models';
 
 const Aromanize: any = require('aromanize');
 
-export function WordPreview(props: IWord & { showType: string }) {
-  const simpleMeaning = props.meaning?.split('，')?.[0] || '';
+export function WordPreview(props: { showType: string, word: RawWordItem }) {
+  const simpleMeaning = props.word.meaning?.split('，')?.[0] || '';
 
   return <tr>
     {
       props.showType !== 'zh'
         ? <td lang="ko">
-            <span className="word-name">{props.wordName}</span>
-            <span className="pronunciation" >{props.pronunciation}</span>
+            <span className="word-name">{props.word.wordName}</span>
+            <span className="pronunciation" >{props.word.pronunciation}</span>
           </td>
         : null
     }
@@ -27,16 +27,16 @@ export function WordPreview(props: IWord & { showType: string }) {
       props.showType !== 'ko'
         ? <td>
             <span className="meaning">{simpleMeaning}</span>
-            <span className="pos">[{props.pos}] {props.description}</span>
+            <span className="pos">[{props.word.pos}] {props.word.description}</span>
           </td>
         : null
     }
 
     <td className="player-holder">
       {
-        props.hasAudio
+        props.word.hasAudio
           ? <AudioPlayer showRepeat={false}
-                         urls={[`${Aromanize.romanize(props.wordName)}.mp3`]} />
+                         urls={[`${Aromanize.romanize(props.word.wordName)}.mp3`]} />
           : null
       }
     </td>

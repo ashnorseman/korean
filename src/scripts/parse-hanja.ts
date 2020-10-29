@@ -95,7 +95,7 @@ console.log(koreanSet);
 
 // fs.writeFileSync(wordsPath, wordLines.join('\n') + '\n');
 //
-// const words: IWord[] = wordLines
+// const words: RawWordItem[] = wordLines
 //   .filter(line => line.startsWith('*'))
 //   .map(line => line.split(/\t/))
 //   .map(line => {

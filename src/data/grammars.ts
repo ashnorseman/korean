@@ -144,5 +144,4 @@ export const grammarItems: GrammarItem[] = ([
     ysBook: 1,
     ysUnit: 2
   }
-] as Partial<GrammarItem>[])
-  .map((data: Partial<GrammarItem>) => new GrammarItem(data));
+] as any[]);

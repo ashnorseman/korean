@@ -15,12 +15,12 @@ import { WordList } from '../../components/word-list';
 import * as lessonData from '../../data/lesson-data.json';
 import * as vocabularyData from '../../data/vocabulary.json';
 import { Lesson } from '../../models';
-import { IWord } from '../../interfaces/i-word';
+import { RawWordItem } from '../../models';
 
 import './LessonPage.css';
 
 const lessons: Lesson[] = (lessonData as any).default as Lesson[];
-const words: IWord[] = (vocabularyData as any).default as IWord[];
+const words: RawWordItem[] = ((vocabularyData as any).default as any[]).map(item => new RawWordItem(item)) as RawWordItem[];
 
 /**
  * Render a lesson
