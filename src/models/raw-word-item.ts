@@ -28,10 +28,10 @@ export class RawWordItem {
   /**
    * Sort words
    */
-  public compare(target: RawWordItem): number {
-    if (this.used !== target.used) {
-      return this.used ? -1 : 1;
-    }
+  public compare(target: RawWordItem, options?: { wordNameBeforePos: boolean }): number {
+    // if (this.used !== target.used) {
+    //   return this.used ? -1 : 1;
+    // }
 
     if (this.ysBook !== target.ysBook) {
       return this.ysBook - target.ysBook;
@@ -39,6 +39,10 @@ export class RawWordItem {
 
     if (this.ysUnit !== target.ysUnit) {
       return this.ysUnit - target.ysUnit;
+    }
+
+    if (options?.wordNameBeforePos && (this.wordName !== target.wordName)) {
+      return this.wordName.localeCompare(target.wordName);
     }
 
     if (this.pos !== target.pos) {
