@@ -38,7 +38,6 @@
     "eject": "react-scripts eject",
     "scripts": "ts-node-dev --project src/scripts/tsconfig.json src/scripts/run.ts",
     "parse:hanja": "ts-node-dev --respawn --project src/scripts/tsconfig.json src/scripts/parse-hanja.ts",
-    "parse:words": "ts-node-dev --respawn --project src/scripts/tsconfig.json src/scripts/query-vocabulary.ts",
     "sort:words": "ts-node-dev --respawn --project src/scripts/tsconfig.json src/scripts/create-json.ts"
   },
   "eslintConfig": {

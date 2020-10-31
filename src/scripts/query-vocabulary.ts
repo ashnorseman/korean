@@ -55,7 +55,7 @@ class QueryVocabulary {
         });
 
         if (!matchItems?.length) {
-          console.log(`Can't find exact match for ${word.wordName}. Possible options: ${findItems?.map(item => item.handleEntry).join('')}`);
+          console.log(`Can't find exact match for ${word.wordName}. Possible options: [${findItems?.map(item => item.handleEntry).join(', ')}]`);
           return;
         }
 
@@ -68,48 +68,45 @@ class QueryVocabulary {
           const filePath = entryCommon?.pron_file_female || entryCommon?.pron_file_male;
           const savedFilePath = path.resolve(__dirname, `../../public/audio/${Aromanize.romanize(word.wordName)}.mp3`);
 
-          if (filePath && !fs.readFileSync(savedFilePath)) {
+          if (filePath) {
             getBuffer(filePath).then((res: any) => {
               fs.writeFileSync(savedFilePath, res);
             });
           }
 
-          matchItems?.forEach(item => {
+          item.meansCollector?.forEach(meaning => {
+            let pos = meaning.partOfSpeech2 || '未知';
 
-            item.meansCollector?.forEach(meaning => {
-              let pos = meaning.partOfSpeech2 || '未知';
+            if (pos.includes('动词')) {
+              pos = '动词';
+            }
 
-              if (pos.includes('动词')) {
-                pos = '动词';
-              }
+            const meanings = this.mergeMeanings(
+              meaning.means.map(mean => this.cleanText(mean.value))
+            );
 
-              const meanings = this.mergeMeanings(
-                meaning.means.map(mean => this.cleanText(mean.value))
-              );
+            if (!meanings) {
+              console.log(`No meanings for word ${word.wordName}`);
+              return;
+            }
 
-              if (!meanings) {
-                console.log(`No meanings for word ${word.wordName}`);
-                return;
-              }
-
-              newFoundResult.push(new RawWordItem({
-                description: item.expAliasGeneralAlwaysList?.pop()?.originLanguageValue || '',
-                hasAudio: !!filePath,
-                meaning: meanings,
-                pos,
-                pronunciation,
-                wordName: word.wordName,
-                ysBook: this.bookIndex,
-                ysUnit: word.ysUnit
-              }));
-            });
+            newFoundResult.push(new RawWordItem({
+              description: item.expAliasGeneralAlwaysList?.pop()?.originLanguageValue || '',
+              hasAudio: !!filePath,
+              meaning: meanings,
+              pos,
+              pronunciation,
+              wordName: word.wordName,
+              ysBook: this.bookIndex,
+              ysUnit: word.ysUnit
+            }));
           });
         });
 
-        await Promise.all(entryPromises);
+        await Promise.all(entryPromises).catch(error => console.error(error));
       });
 
-    await Promise.all(wordPromises);
+    await Promise.all(wordPromises).catch(error => console.error(error));
 
     return new Promise(resolve => resolve(newFoundResult));
   }
@@ -174,7 +171,6 @@ class QueryVocabulary {
         .sort((a, b) => a.compare(b, {
           wordNameBeforePos: true
         }));
-      const redundantIndex: number[] = [];
 
       wholeContent.forEach((item, index) => {
         const sameName = wholeContent.filter(i => i.wordName === item.wordName);
@@ -183,33 +179,12 @@ class QueryVocabulary {
           item.used = true;
           return;
         }
-
-        if (sameName.length > 1) {
-          const redundant = sameName.filter(i => i.meaning === item.meaning && i.pos === item.pos);
-
-          if (redundant.length > 1) {
-            const hasAudio = redundant.filter(i => i.hasAudio);
-
-            if (hasAudio.length && !item.hasAudio) {
-              redundantIndex.push(index);
-              return;
-            }
-
-            const first = wholeContent.findIndex(i => {
-              return i.wordName === item.wordName
-                && i.meaning === item.meaning
-                && i.pos === item.pos;
-            });
-
-            if (index !== first) {
-              redundantIndex.push(index);
-            }
-          }
-        }
       });
 
       const text = wholeContent
-        .filter((item, index) => !redundantIndex.includes(index))
+        .sort((a, b) => a.compare(b, {
+          wordNameBeforePos: true
+        }))
         .map(item => item.toLine())
         .join('\n');
 
