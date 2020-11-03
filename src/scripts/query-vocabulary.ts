@@ -162,7 +162,7 @@ class QueryVocabulary {
       const savePath = path.resolve(__dirname, `../raw-data/words-${this.bookIndex}.txt`);
       const currentContent = fs
         .readFileSync(savePath, 'utf-8')
-        .trim()
+        .trimEnd()
         .split('\n')
         .filter(line => !!line)
         .map(line => RawWordItem.fromLine(line));
