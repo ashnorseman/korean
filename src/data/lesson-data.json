@@ -48,5 +48,55 @@
     "book": 1,
     "lesson": 10,
     "name": "휴일과 방학"
+  },
+  {
+    "book": 2,
+    "lesson": 1,
+    "name": "소개"
+  },
+  {
+    "book": 2,
+    "lesson": 2,
+    "name": "한국 음식"
+  },
+  {
+    "book": 2,
+    "lesson": 3,
+    "name": "시장"
+  },
+  {
+    "book": 2,
+    "lesson": 4,
+    "name": "초대"
+  },
+  {
+    "book": 2,
+    "lesson": 5,
+    "name": "교통"
+  },
+  {
+    "book": 2,
+    "lesson": 6,
+    "name": "공공기관"
+  },
+  {
+    "book": 2,
+    "lesson": 7,
+    "name": "전화"
+  },
+  {
+    "book": 2,
+    "lesson": 8,
+    "name": "병원"
+  },
+  {
+    "book": 2,
+    "lesson": 9,
+    "name": "여행"
+  },
+  {
+    "book": 2,
+    "lesson": 10,
+    "name": "집안일"
   }
 ]
